@@ -4,19 +4,14 @@ use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProductVariantController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\v1\ShoppingCartController;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/user', function (Request $request) {
-//    return $request->user();
-//})->middleware('auth:sanctum');
-
 Route::prefix('v1')->group(function () {
-
     //Authentication
-    Route::middleware('auth:sanctum')->get('/profile', [AuthController::class, 'getProfile']); //get user profile
     Route::post('/register',[AuthController::class, 'register']); //register a user
     Route::post('/login',[AuthController::class, 'login']); //login a user
+    Route::middleware('auth:sanctum')->get('/profile', [AuthController::class, 'getProfile']); //get user profile
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']); //logout a user
 
     //products
@@ -44,6 +39,14 @@ Route::prefix('v1')->group(function () {
         Route::get('/{id}', [ProductVariantController::class, 'show']); //get a variant by id
         Route::post('/', [ProductVariantController::class, 'store']); //post (store) a new product variant
         Route::delete('/{id}', [ProductVariantController::class, 'destroy']); //delete a product variant
+    });
+
+    //shoppingCart
+    Route::prefix('cart')->middleware('auth:sanctum')->group(function () {
+        Route::get('/', [ShoppingCartController::class, 'index']); //get shopping cart content per user
+        Route::post('/add', [ShoppingCartController::class, 'store']); //add a new item to shopping cart
+        Route::put('/update/{id}', [ShoppingCartController::class, 'update']); //update an item in shopping cart
+        Route::delete('/remove/{id}', [ShoppingCartController::class, 'destroy']); //delete an item from shopping cart
     });
 
 });

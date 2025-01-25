@@ -20,9 +20,9 @@ class ProductVariantFactory extends Factory
         $productIds = Product::all()->pluck('id')->toArray();
         return [
             'product_id' => $this->faker->randomElement($productIds),
-            'color' => $this->faker->colorName(),
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
-            'stock_quantity' => $this->faker->numberBetween(1, 30)
+            'color' => $this->faker->randomElement(['Red', 'Blue', 'Green', 'Yellow', 'Black', 'White', 'Pink', 'Navy blue', 'Beige', 'Brown', 'Grey']),
+            'size' => $this->faker->randomElement(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+            'stock_quantity' => $this->faker->numberBetween(10, 40)
         ];
     }
 }

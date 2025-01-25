@@ -32,7 +32,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function order() {
+    public function order(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Order::class);
+    }
+
+    public function shoppingCart(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ShoppingCart::class);
     }
 }

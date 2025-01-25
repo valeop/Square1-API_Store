@@ -21,7 +21,7 @@ class OrderFactory extends Factory
         return [
             'user_id' => $this->faker->randomElement($usersIds),
             'date' => $this->faker->date(),
-            'total_amount'=> $this->faker->randomFloat(2, 30, 1000),
+            'total_amount'=> $this->faker->randomFloat(2, 30, 10000),
             'status' => $this->faker->randomElement(['pending', 'delivered', 'cancelled']),
             'payment_method' => $this->faker->randomElement(['cash', 'credit card', 'debit card']),
             'shipping_address' => $this->faker->address(),

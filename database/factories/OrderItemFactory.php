@@ -24,7 +24,7 @@ class OrderItemFactory extends Factory
             'order_id' => $this->faker->randomElement($orderIds),
             'product_variant_id' => $this->faker->randomElement($productVariantIds),
             'quantity' => $this->faker->numberBetween(1, 10),
-            'price' => $this->faker->randomFloat(2, 30, 1000),
+            'price' => $this->faker->randomFloat(2, 20, 500),
         ];
     }
 }

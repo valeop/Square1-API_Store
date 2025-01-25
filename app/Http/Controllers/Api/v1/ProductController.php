@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-
     //GET method: get all products
     public function index(Request $request): JsonResponse
     {
@@ -145,7 +144,7 @@ class ProductController extends Controller
             $attributes = $request->input('attributes');
             $value = $request->input('value');
 
-            $query->whereJsonContains('other_attributes->' . $attributes, $value);
+            $query->where('other_attributes->' . $attributes, 'like', '%' . $value . '%');
         }
 
         //filter by color
@@ -153,7 +152,7 @@ class ProductController extends Controller
             $color = $request->input('color');
 
             $query->whereHas('variant', function (Builder $q) use ($color) {
-                $q->where('color', $color);
+                $q->where('color', 'like', '%' . $color . '%');
             });
         }
 
@@ -162,7 +161,7 @@ class ProductController extends Controller
             $size = $request->input('size');
 
             $query->whereHas('variant', function (Builder $q) use ($size) {
-                $q->where('size', $size);
+                $q->where('size', 'like',  '%' . $size . '%');
             });
         }
 
