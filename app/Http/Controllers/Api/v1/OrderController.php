@@ -88,7 +88,7 @@ class OrderController extends Controller
     //GET method: get an order by id
     public function show(string $id): JsonResponse
     {
-        $order = Order::with('orderItem')->find($id);
+        $order = Order::with('orderItem')->findOrFail($id);
         if (!Gate::allows('user-view-order', $order)) {
             return response()->json([
                 'message' => "Sorry, you can't access this order."

@@ -139,7 +139,7 @@ class ProductController extends Controller
             $query->where('price', '<=', $request->input('max_price'));
         }
 
-        //filter by attribute
+        //filter by attribute (brand, collection, gender)
         if ($request->has('attributes') && $request->has('value')) {
             $attributes = $request->input('attributes');
             $value = $request->input('value');

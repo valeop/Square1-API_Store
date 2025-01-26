@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\ProductVariant;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,15 +14,15 @@ class ProductVariantController extends Controller
 {
 
     //GET method: get all products variants
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $perPage = $request->query('per_page', 10);
-        $variants = ProductVariant::with('orderItem')->paginate($perPage);
+        $variants = ProductVariant::paginate($perPage);
         return response()->json($variants, 200);
     }
 
     //PUT method: store  a new product variant
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         DB::beginTransaction();
 
@@ -48,10 +49,10 @@ class ProductVariantController extends Controller
     }
 
     //GET method: get a product variant by id
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         try {
-            $variant = ProductVariant::with('orderItem')->findOrFail($id);
+            $variant = ProductVariant::findOrFail($id);
             return response()->json($variant, 200);
         } catch (ModelNotFoundException $e) {
             \Log::error('Error retrieving product variant: ' . $e->getMessage(), [
@@ -67,7 +68,7 @@ class ProductVariantController extends Controller
 
 
     //PUT method: modify a product variant
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
         try {
             $variant = ProductVariant::findOrFail($id);
@@ -96,7 +97,8 @@ class ProductVariantController extends Controller
     }
 
     // SEARCH method: filter product variants by attributes
-    public function search(Request $request) {
+    public function search(Request $request): JsonResponse
+    {
         $query = ProductVariant::with('product');
 
         //filter by product name
@@ -110,12 +112,12 @@ class ProductVariantController extends Controller
 
         //filter by color
         if ($request->has('color')) {
-            $query->where('color', $request->input('color'));
+            $query->where('color', 'like', '%' . $request->input('color') . '%');
         }
 
         //filter by size
         if ($request->has('size')) {
-            $query->where('size', $request->input('size'));
+            $query->where('size', 'like', '%' . $request->input('size') . '%');
         }
 
         //filter by attribute (brand, collection, gender)
@@ -124,7 +126,7 @@ class ProductVariantController extends Controller
             $value = $request->input('value');
 
             $query->whereHas('product', function (Builder $q) use ($attributes, $value) {
-                $q->whereJsonContains('other_attributes->' . $attributes, $value);
+                $q->where('other_attributes->' . $attributes, 'like', '%' . $value . '%');
             });
         }
 
