@@ -8,7 +8,7 @@ This README file will explain to you how to test all the endpoints related to th
    - **ProductVariantSeeder:** this seeder will create 15 new variants for products.
 - Some models have relation rules or conditions to inject data and test some endpoints, that's why having factories only for User, ShoppingCart, Product, and ProductVariant models could be a better option; however, if yo want to inject data manually from factories, these are some commands you can use after call `php artisan tinker` in your project's terminal:
 
-**NOTE:** these commands are not part por the guide, it's just additional information in case it can be useful for you.
+**NOTE:** these commands are not part of the guide, it's just additional information in case it can be useful for you.
   
    - **Create users:** `$users = App\Models\User::factory(*quantity*)->create()`
    - **Create shopping cart:** `$users->map(fn($user) => App\Models\ShoppingCart::factory()->create(['user_id' => $user->id])); ` 
