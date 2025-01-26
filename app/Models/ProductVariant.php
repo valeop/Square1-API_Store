@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductVariant extends Model
 {
@@ -19,12 +20,12 @@ class ProductVariant extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function orderItem(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orderItem(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function cartItem(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function cartItem(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }

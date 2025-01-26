@@ -23,7 +23,8 @@ class Product extends Model
         $this->attributes['other_attributes'] = json_encode($value);
     }
 
-    public function variant() {
+    public function variant(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(ProductVariant::class);
     }
 }

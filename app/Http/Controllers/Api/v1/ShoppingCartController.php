@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ShoppingCart;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,14 +17,14 @@ class ShoppingCartController extends Controller
 {
 
     // GET method: get shopping cart content
-    public function index()
+    public function index(): JsonResponse
     {
         $cart = Auth::user()->shoppingCart;
         return response()->json($cart->load('cartItem'), 200);
     }
 
     //POST method: store cart items
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         DB::beginTransaction();
         try {
@@ -52,7 +53,7 @@ class ShoppingCartController extends Controller
     }
 
     //PUT method: update cart items' quantity
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
         try {
             $cartItem = CartItem::findOrFail($id);
@@ -73,7 +74,7 @@ class ShoppingCartController extends Controller
     }
 
     //DELETE method: store cart items
-    public function destroy(string $id)
+    public function destroy(string $id): \Illuminate\Http\Response
     {
         $cartItem = CartItem::findOrFail($id);
         $cartItem->delete();
