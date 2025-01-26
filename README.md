@@ -18,7 +18,10 @@ This README file will explain to you how to test all the endpoints related to th
    - **Create orders item:** `App\Models\OrderItem::factory(*quantity*)->create()`
    - **Create cart items:** `App\Models\CartItem::factory(*quantity*)->create()`     
 
-## Endpoints Guide (explained))
+## Endpoints Guide (explained)
+
+Link of a public workspace on Postman that has an organized collection with packages that contain all the endpoints: https://www.postman.com/lunar-module-cosmologist-74614115/workspace/public/collection/33250817-b354591a-9922-41bb-9f07-44882a17d1ca?action=share&creator=33250817
+
 1. **Send this command in project's terminal:** php artisan serve
 2. **Send this command to create data by seeders mentioned:** `php artisan db:seed`
 3. Let's test the endpoints showed below:
